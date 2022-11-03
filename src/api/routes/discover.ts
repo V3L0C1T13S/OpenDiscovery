@@ -1,4 +1,5 @@
 import express, { Response } from "express";
+import lodash from "lodash";
 import "missing-native-js-functions";
 import servers from "../../common/db/servers.json";
 import bots from "../../common/db/bots.json";
@@ -25,9 +26,11 @@ function parsePopularTags(tags: string[]) {
   const popular: popularTag[] = tags.map((x) => ({
     item: x,
     ocurrences: tags.filter((y) => x === y).length,
-  })).unique();
+  })).unique((x) => x.item);
 
-  return popular.map((x) => x.item);
+  const meanOcurrences = lodash.mean(popular.map((x) => x.ocurrences));
+
+  return popular.filter((x) => x.ocurrences > meanOcurrences).map((x) => x.item);
 }
 
 router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {

@@ -14,6 +14,8 @@ describe("api get requests", () => {
   test("get servers", async () => {
     const servers = await axiosClient.get("/discover/servers.json");
 
+    console.log(JSON.stringify(servers.data));
+
     expect(checkPageProps(servers.data));
   });
 
