@@ -1,4 +1,5 @@
 import express, { Response } from "express";
+import "missing-native-js-functions";
 import servers from "../../common/db/servers.json";
 import bots from "../../common/db/bots.json";
 import themes from "../../common/db/themes.json";
@@ -15,14 +16,28 @@ function makeDiscoveryResponse(data: any) {
   };
 }
 
+type popularTag = {
+  ocurrences: number,
+  item: string,
+}
+
 function parsePopularTags(tags: string[]) {
-  return;
+  const popular: popularTag[] = tags.map((x) => ({
+    item: x,
+    ocurrences: tags.filter((y) => x === y).length,
+  })).unique();
+
+  return popular.map((x) => x.item);
 }
 
 router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {
+  const tags: string[] = [];
+
+  servers.forEach((x) => x.tags.forEach((t) => tags.push(t)));
+
   res.json(makeDiscoveryResponse({
     servers,
-    popularTags: [],
+    popularTags: parsePopularTags(tags),
   }));
 });
 
