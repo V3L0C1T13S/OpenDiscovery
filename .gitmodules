@@ -1,0 +1,3 @@
+[submodule "src/common/util/vserver"]
+	path = src/common/util/vserver
+	url = https://gitlab.com/V3L0C1T13S/vserver.git
