@@ -39,6 +39,7 @@
     "express-async-errors": "^3.1.1",
     "express-automatic-routes": "^1.1.0",
     "lodash": "^4.17.21",
-    "missing-native-js-functions": "^1.2.18"
+    "missing-native-js-functions": "^1.2.18",
+    "mongodb": "^4.11.0"
   }
 }

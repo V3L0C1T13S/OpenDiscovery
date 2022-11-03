@@ -33,10 +33,16 @@ function parsePopularTags(tags: string[]) {
   return popular.filter((x) => x.ocurrences > meanOcurrences).map((x) => x.item);
 }
 
-router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {
-  const tags: string[] = [];
+function extractTags(tags: string[][]) {
+  const extracted: string[] = [];
 
-  servers.forEach((x) => x.tags.forEach((t) => tags.push(t)));
+  tags.forEach((x) => x.forEach((t) => extracted.push(t)));
+
+  return extracted;
+}
+
+router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {
+  const tags: string[] = extractTags(servers.map((x) => x.tags));
 
   res.json(makeDiscoveryResponse({
     servers,
