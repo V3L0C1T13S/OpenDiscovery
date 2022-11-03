@@ -1,0 +1,37 @@
+[
+	{
+		"_id": "01F7ZSBSFHQ8TA81725KQCSDDP",
+		"name": "Revolt Lounge",
+		"icon": {
+			"_id": "gtc0gJE2S3RvuDhrl2-JeakvgbqEGr2acvBnRTTh6k",
+			"tag": "icons",
+			"filename": "logo_round.png",
+			"metadata": {
+				"type": "Image",
+				"width": 500,
+				"height": 500
+			},
+			"content_type": "image/png",
+			"size": 7558
+		},
+		"banner": {
+			"_id": "yMurJiXf45VJpbal0X2zQkm4vaXsXGaRtoPUIcvPcH",
+			"tag": "banners",
+			"filename": "pattern-big 1.png",
+			"metadata": {
+				"type": "Image",
+				"width": 1650,
+				"height": 750
+			},
+			"content_type": "image/png",
+			"size": 69477
+		},
+		"description": "Official server run by the team behind Revolt.\nGeneral conversation and support server.\n \nAppeals and reports: lounge@revolt.chat",
+		"flags": 1,
+		"tags": [
+			"revolt"
+		],
+		"members": 20113,
+		"activity": "high"
+	}
+]
