@@ -1,6 +1,5 @@
 import express, { Response } from "express";
-import lodash from "lodash";
-import "missing-native-js-functions";
+import { extractTags, makeDiscoveryResponse, parsePopularTags } from "../../common/util";
 import servers from "../../common/db/servers.json";
 import bots from "../../common/db/bots.json";
 import themes from "../../common/db/themes.json";
@@ -8,40 +7,7 @@ import { DiscoveryResponse, Server } from "../../common/types/discovery";
 
 const router = express.Router();
 
-function makeDiscoveryResponse(data: any) {
-  return {
-    pageProps: {
-      ...data,
-    },
-    __N_SSG: true,
-  };
-}
-
-type popularTag = {
-  ocurrences: number,
-  item: string,
-}
-
-function parsePopularTags(tags: string[]) {
-  const popular: popularTag[] = tags.map((x) => ({
-    item: x,
-    ocurrences: tags.filter((y) => x === y).length,
-  })).unique((x) => x.item);
-
-  const meanOcurrences = lodash.mean(popular.map((x) => x.ocurrences));
-
-  return popular.filter((x) => x.ocurrences > meanOcurrences).map((x) => x.item);
-}
-
-function extractTags(tags: string[][]) {
-  const extracted: string[] = [];
-
-  tags.forEach((x) => x.forEach((t) => extracted.push(t)));
-
-  return extracted;
-}
-
-router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {
+router.get("/servers.json", (req, res: Response<DiscoveryResponse<Server>>) => {
   const tags: string[] = extractTags(servers.map((x) => x.tags));
 
   res.json(makeDiscoveryResponse({
@@ -50,14 +16,14 @@ router.get("/discover/servers.json", (req, res: Response<DiscoveryResponse<Serve
   }));
 });
 
-router.get("/discover/bots.json", (req, res: Response<DiscoveryResponse<any>>) => {
+router.get("/bots.json", (req, res: Response<DiscoveryResponse<any>>) => {
   res.json(makeDiscoveryResponse({
     bots,
     popularTags: [],
   }));
 });
 
-router.get("/discover/themes.json", (req, res: Response<DiscoveryResponse<any>>) => {
+router.get("/themes.json", (req, res: Response<DiscoveryResponse<any>>) => {
   res.json(makeDiscoveryResponse({
     themes,
     popularTags: [],

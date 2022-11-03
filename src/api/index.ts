@@ -9,7 +9,7 @@ export class OpenDiscoveryAPI extends Server {
 
   async start() {
     this.app.use(express.json());
-    this.app.use("/_next/data/:buildId", discoverRouter);
+    this.app.use("/_next/data/:buildId/discover", discoverRouter);
     this.app.use("/status", statusRouter);
     this.app.use("/discover/:type", (req, res) => {
       res.sendFile(path.join(__dirname, "../../assets/views/index.html"));
